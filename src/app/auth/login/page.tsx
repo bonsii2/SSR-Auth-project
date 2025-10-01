@@ -25,7 +25,7 @@ export default function Login() {
         <div style={{ color: "red", marginBottom: "1rem" }}>Error: {error}</div>
       )}
 
-      <form action="/auth/login" method="post">
+      <form action="/api/auth/login" method="post">
         <label htmlFor="email">Email</label>
         <input
           id="email"

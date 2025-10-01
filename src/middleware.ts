@@ -16,7 +16,7 @@ if(req.nextUrl.pathname.startsWith('/dashboard')){
       console.log('Middleware - Redirecting to login');
 
 
-const redirectUrl = new URL('/login', req.url);
+const redirectUrl = new URL('/auth/login', req.url);
 
     redirectUrl.searchParams.set('redirectedForm', req.nextUrl.pathname);
         return NextResponse.redirect(new URL(redirectUrl));
