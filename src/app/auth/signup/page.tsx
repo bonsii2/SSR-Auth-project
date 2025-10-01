@@ -2,7 +2,7 @@
 
 export default function SignUp() {
   return (
-    <form action="/auth/signup" method="post">
+    <form action="/api/auth/signup" method="post">
       <label htmlFor="email">Email</label>
       <input
         id="email"
