@@ -15,14 +15,11 @@ export default function Login() {
 
   return (
     <div className="max-w-md mx-auto mt-16 p-6 border border-gray-200 rounded-lg shadow-md bg-white">
-      <h2 className="text-2xl font-semibold text-center mb-6 text-gray-800">
-        Login
-      </h2>
+      <h2 className="text-2xl font-semibold text-center mb-6 text-gray-800">Login</h2>
 
       {redirectedFrom && (
         <div className="text-orange-600 mb-4 text-sm">
-          Please log in to access{" "}
-          <span className="font-medium">{redirectedFrom}</span>
+          Please log in to access <span className="font-medium">{redirectedFrom}</span>
         </div>
       )}
 
@@ -32,16 +29,9 @@ export default function Login() {
         </div>
       )}
 
-      <form
-        action="/api/auth/login"
-        method="post"
-        className="flex flex-col gap-4"
-      >
+      <form action="/api/auth/login" method="post" className="flex flex-col gap-4">
         <div>
-          <label
-            htmlFor="email"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
             Email
           </label>
           <input
@@ -55,10 +45,7 @@ export default function Login() {
         </div>
 
         <div>
-          <label
-            htmlFor="password"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
+          <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
             Password
           </label>
           <input
