@@ -1,36 +1,51 @@
-// export default function SignUp(){
-//     return <form action="/auth/signup" method="post">
-//         <label htmlFor="email">email</label>
-//         <input type="email" placeholder="email" name="email" />
-//         <label htmlFor="password">password</label>
-//         <input type="password" placeholder="password" name="password" />
-//         <button type="submit">singup</button>
+"use client";
 
-//     </form>
-// }
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Login() {
+  const searchParams = useSearchParams();
+  const error = searchParams.get("error");
+  const redirectedFrom = searchParams.get("redirectedFrom");
+
+  useEffect(() => {
+    console.log("Login Page - Error:", error);
+    console.log("Login Page - Redirected from:", redirectedFrom);
+  }, [error, redirectedFrom]);
+
   return (
-    <form action="/auth/login" method="post">
-      <label htmlFor="email">Email</label>
-      <input
-        id="email"
-        type="email"
-        name="email"
-        placeholder="email"
-        required
-      />
+    <div>
+      {redirectedFrom && (
+        <div style={{ color: "orange", marginBottom: "1rem" }}>
+          Please log in to access {redirectedFrom}
+        </div>
+      )}
 
-      <label htmlFor="password">Password</label>
-      <input
-        id="password"
-        type="password"
-        name="password"
-        placeholder="password"
-        required
-      />
+      {error && (
+        <div style={{ color: "red", marginBottom: "1rem" }}>Error: {error}</div>
+      )}
 
-      <button type="submit">Sign Up</button>
-    </form>
+      <form action="/auth/login" method="post">
+        <label htmlFor="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          name="email"
+          placeholder="email"
+          required
+        />
+
+        <label htmlFor="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          name="password"
+          placeholder="password"
+          required
+        />
+
+        <button type="submit">Login</button>
+      </form>
+    </div>
   );
 }

@@ -16,21 +16,19 @@ const supabase = createRouteHandlerClient({
     cookies: () => cookiesStore
 })
 
-// await supabase
-// .auth
-// .signInWithPassword(
-//     {
-//         email, password,
-//         options:{
-//             emailRedirectTo: `$(url.origin)/auth/callback`
-//         }
-//     }
-// )
+await supabase
+.auth
+.signInWithPassword(
+    {
+        email, password,
+       
+    }
+)
 
 
 
 
-    return NextResponse.redirect(`${url.origin}/`, {
+    return NextResponse.redirect(`${url.origin}/dashboard`, {
         status: 301
     })
 }
