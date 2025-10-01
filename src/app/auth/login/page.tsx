@@ -1,8 +1,7 @@
 "use client";
-
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-
+import Link from "next/link";
 export default function Login() {
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
@@ -64,6 +63,7 @@ export default function Login() {
         >
           Login
         </button>
+        <Link href={'/auth/forgetPassword'}>forget password</Link>
       </form>
     </div>
   );
