@@ -4,9 +4,11 @@ import { NextRequest, NextResponse } from "next/server";
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
   const supabase = createMiddlewareClient({ req, res });
+  
 
   const { data: { session } } = await supabase.auth.getSession();
 
+  console.log("Middleware - Session user:", session?.user?.email || "No session");
   // Debug logging
   console.log('Middleware - Path:', req.nextUrl.pathname);
   console.log('Middleware - Session exists:', !!session);
