@@ -52,7 +52,7 @@ console.log('user created:' , data.user.id);
 console.log('email confirmation required:' , data.user.confirmed_at ? 'no': 'yes');
 
 
-    return NextResponse.redirect(`${url.origin}/login`, {
+    return NextResponse.redirect(`${url.origin}/auth/login`, {
         status: 302
     })
 }

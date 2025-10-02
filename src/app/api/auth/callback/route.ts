@@ -10,10 +10,8 @@ export async function GET(req: NextRequest){
   const res = NextResponse.redirect(new URL(redirectTo , url.origin));
 
   if(code){
-    const cookiesStore = cookies();
-    const supabase = createRouteHandlerClient({
-        cookies: ()=> cookiesStore
-    });
+
+    const supabase = createRouteHandlerClient({cookies ,  });
 
     await supabase 
     .auth
