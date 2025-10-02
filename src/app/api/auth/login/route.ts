@@ -1,34 +1,40 @@
-
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function  POST(req: NextRequest){
- const url = new URL(req.url);
-const cookiesStore = cookies();
+export async function POST(request: Request) {
+  try {
+    const { email, password } = await request.json();
+    const cookieStore = cookies();
+    const supabase = createRouteHandlerClient({
+      cookies: () => cookieStore,
+    });
 
-const formData = await req.formData();
-const email = String(formData.get('email'));
-const password = String(formData.get('password'));
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-
-const supabase = createRouteHandlerClient({
-    cookies: () => cookiesStore
-})
-
-await supabase
-.auth
-.signInWithPassword(
-    {
-        email, password,
-       
+    if (error) {
+      console.error("Login error:", error.message);
+      return NextResponse.json(
+        { error: error.message },
+        { status: 400 }
+      );
     }
-)
 
+    console.log("Login successful:", data.user?.email);
+    
+    return NextResponse.json(
+      { user: data.user },
+      { status: 200 }
+    );
 
-
-
-    return NextResponse.redirect(`${url.origin}/dashboard`, {
-        status: 301
-    })
+  } catch (error) {
+    console.error("Unexpected error:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
 }
