@@ -30,33 +30,29 @@ export default function Login() {
     console.log("Attempting login with:", { email, password: "***" });
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: email.trim().toLowerCase(), // Normalize email
-        password,
-      });
-
-      console.log("Supabase response:", { data, error });
-
-      if (error) {
-        console.error("Login error details:", {
-          message: error.message,
-          name: error.name,
-          status: error.status,
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify({email, password}),
         });
-        setFormError(error.message);
-        return;
-      }
 
-      if (data.user) {
-        console.log("Login successful! User:", data.user.email);
-        console.log("Session:", data.session);
+        const result = await response.json();
 
+        if(!response.ok){
+          setFormError(result.error || 'login failed');
+          return;
+        }
+
+        console.log('login sucessfully');
         router.refresh();
-        const redirectTo = redirectedFrom || "/dashboard";
-        setTimeout(() => {
-          router.push(redirectTo);
-        }, 100);
-      }
+
+     const redirectTo = redirectedFrom || '/dashboard';
+     router.push(redirectTo)
+ 
+
+
     } catch (error) {
       console.error("Unexpected error:", error);
       setFormError("An unexpected error occurred");
