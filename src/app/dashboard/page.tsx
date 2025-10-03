@@ -20,6 +20,7 @@ const supabase = createServerComponentClient({cookies});
         <form action="/api/auth/logout" method="post">
           <button type="submit">logout</button>
           <Link href={"/registerOrganization"}>register orgnaization</Link>
+          <Link href={"/ImageUploader"}>upload</Link>
         </form>
       </>
     );
