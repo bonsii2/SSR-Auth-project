@@ -8,11 +8,9 @@ export async function GET(req: NextRequest){
   const redirectTo = url.searchParams.get('redirect_to') || "/dashboard" ;
 
   const res = NextResponse.redirect(new URL(redirectTo , url.origin));
-  const cookiesStore = cookies()
+  const cookiesStore =   cookies()
    const supabase = createRouteHandlerClient({cookies: () => cookiesStore  });
   if(code){
-
-   
 
     await supabase 
     .auth
