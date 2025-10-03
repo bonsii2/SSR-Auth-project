@@ -7,13 +7,37 @@ try{
     
   
 
-    const body = await req.json();
-    console.log("API body:", body);
-    const {name, phone, location} = body;
+    const formData = await req.formData();
+    const name = formData.get('name');
+    const phone = formData.get('phone');
+    const location = formData.get('location');
+    const logo = formData.get('logo') as File | null;
+    let logoUrl: string | null = null;
+
+    if(logo){
+        const fileExt = logo.name.split('.').pop();
+        const fileName = `${Date.now()}.${fileExt}}`
+
+        const {error: uploadError} = await supabase.storage
+        .from('logos')
+        .upload(fileName, logo)
+
+        if(uploadError){
+            return NextResponse.json({error: "logo is not uploaded" + uploadError.message})
+        }
+
+        const {data: urlData} = supabase.storage
+        .from('logos')
+        .getPublicUrl(fileName)
+
+       logoUrl = urlData.publicUrl;
+
+    }
+
 
     const {data, error} = await supabase
     .from('organization')
-    .insert([{name, phone, location}]);
+    .insert([{name, phone, location, logo: logoUrl}]);
 
     if(error) return NextResponse.json({error: error.message}, {status: 400});
 

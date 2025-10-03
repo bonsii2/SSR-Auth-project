@@ -9,13 +9,25 @@ export default   function page()
 const [phone, setPhone] = useState('');
 const [name, setName] = useState('');
 const [location, setLocation] = useState('');
+const [logo, setLogo] = useState<File | null>(null);
+const [loading, setUploading] = useState(false);
 
 const  handleInsert = async () =>{
   try{
+    if(!logo) {
+      alert('please select the a logo file')
+      return
+    }
+    setUploading(true)
+const formData = new FormData();
+formData.append("name", name);
+formData.append("phone", phone);
+formData.append("location", location);
+formData.append("logo", logo);
+
  const res = await fetch('/api/RegisterOrganization', {
     method: "POST",
-    headers: {"content-Type": "application/json"},
-    body: JSON.stringify({name, phone, location})
+    body: formData,
  })
  const json = await res.json();
  if(!res.ok){
@@ -55,12 +67,14 @@ alert("Organization created!");
         onChange={(e) => setPhone(e.target.value)}
       />
       <input type="text" placeholder='enter your location' name='location' value={location} onChange={(e) => setLocation(e.target.value)} />
+      <input type="file" accept='image/*' onChange={(e) =>setLogo(e.target.files?.[0] || null)} />
       <button
         className="bg-blue-500 text-white px-4 py-2 rounded"
         onClick={handleInsert}
       >
         Add User
       </button>
+      {loading ? "saving.." : "add organization"}
     </div>
   );
 }
