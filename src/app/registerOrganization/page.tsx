@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
-import { supabase } from '@/lib/supabase';
+'use client'
 
-export default  async function page()
+import { useState } from 'react'
+
+export default   function page()
 
 {
     
@@ -10,12 +11,29 @@ const [name, setName] = useState('');
 const [location, setLocation] = useState('');
 
 const  handleInsert = async () =>{
+  try{
  const res = await fetch('/api/RegisterOrganization', {
     method: "POST",
     headers: {"content-Type": "application/json"},
     body: JSON.stringify({name, phone, location})
  })
+ const json = await res.json();
+ if(!res.ok){
+  console.error("insert failed", json);
+  alert(json.error || 'insert failed');
+  return;
+ }
+console.log('insert:', json.data);
 
+setName("");
+setPhone("");
+setLocation("");
+alert("Organization created!");
+  }catch(err){
+    console.error('network error', err);
+    alert("network error");
+
+  }
 
 }
 
