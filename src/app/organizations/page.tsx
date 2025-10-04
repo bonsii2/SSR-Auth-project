@@ -1,7 +1,7 @@
 'use client'
 import { FetchOrganization } from "../hooks/fetchOrganization";
 import { useEffect, useState } from "react";
-
+import Link from "next/link";
 type organization = {
     id: string;
     name: string;
@@ -25,6 +25,7 @@ useEffect(() =>{
 return (
   <div className="p-4">
     <h2 className="text-xl font-bold mb-4">Organizations</h2>
+
     <ul className="space-y-4">
       {organizations.map((org) => (
         <li key={org.id} className="border p-4 rounded">
@@ -38,6 +39,7 @@ return (
               className="w-32 mt-2"
             />
           )}
+         <Link href={`/organizations/edit/${org.id}`}>edit</Link>
         </li>
       ))}
     </ul>

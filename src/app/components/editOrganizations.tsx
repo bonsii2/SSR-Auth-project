@@ -1,7 +1,8 @@
+'use client'
 import { useEffect, useState } from "react"
 import { supabase } from "../hooks/useSupabase"
 
-export default function EditProfile({userId}: {userId: string}){
+export default function EditProfile({orgId}: {orgId: string}){
  const [name, setName] = useState('')
  const [Phone, setPhone] = useState('')
  const [location, setLocation] = useState('')
@@ -12,7 +13,7 @@ useEffect(() =>{
       const {data, error} = await supabase
       .from('organization')
       .select('name, location, phone')
-      .eq('id', userId)
+      .eq('id', orgId)
       .single()
 
       if(data){
@@ -22,7 +23,7 @@ useEffect(() =>{
       }
    };
     fetchOrganization();
-}, [userId])
+}, [orgId])
 
 const handleUpdate = async () =>{
     const {error} = await supabase
@@ -34,7 +35,7 @@ const handleUpdate = async () =>{
     }else{
         console.log('updated seccussfully');
     }
-    
+
 }
 
     return(
