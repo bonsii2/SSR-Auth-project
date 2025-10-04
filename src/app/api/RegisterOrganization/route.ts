@@ -4,9 +4,6 @@ import { supabase } from "@/app/hooks/useSupabase";
 export async function POST(req: NextRequest){
 
 try{
-    
-  
-
     const formData = await req.formData();
     const name = formData.get('name');
     const phone = formData.get('phone');
@@ -16,7 +13,7 @@ try{
 
     if(logo){
         const fileExt = logo.name.split('.').pop();
-        const fileName = `${Date.now()}.${fileExt}}`
+        const fileName = `${Date.now()}.${fileExt}`
 
         const {error: uploadError} = await supabase.storage
         .from('logos')
@@ -30,7 +27,13 @@ try{
         .from('logos')
         .getPublicUrl(fileName)
 
-       logoUrl = urlData.publicUrl;
+   if(!urlData.publicUrl){
+    console.log('tere is no public url')
+   }else{
+    logoUrl = urlData.publicUrl;
+   }
+
+       
 
     }
 

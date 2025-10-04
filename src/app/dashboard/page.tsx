@@ -40,6 +40,12 @@ export default async function Page() {
           >
             Upload Image
           </Link>
+          <Link
+            href="/organizations"
+            className="w-full text-center bg-green-500 text-white py-2 rounded-lg shadow hover:bg-green-600 transition"
+          >
+            organizations
+          </Link>
         </nav>
 
         {/* Logout form */}
